@@ -1,0 +1,52 @@
+%rax - player 1 deck
+%rbx - player 2 deck
+
+# All decks shifted to highest value
+# A card is 'played' by completing a
+# bit shift to the left, with the 
+# overflow value being the value of 
+# the card.
+
+%cl - p1 deck count
+%ch - p2 deck count
+%rsi - location to create cards_to_add
+%dl - player_to_go flag  - 1 bit?
+%dl - round_colour flag  - 2 bit?
+%dh -  Pile count
+
+1. Get player 1 deck from the stack and store in %eax
+2. Get player 2 deck from the stack and store in %ebx
+3. Set p1 deck count in %cl
+4. Set player_to_go flag
+ # This flag is not used for the first card (which is player 1's) 
+round_first_card:
+5. Shift bits in player_to_go deck
+6. Set round_colour flag to carry flag
+play_card:
+7. Read player_to_go flag
+8a. If player_to_go = 0 - Shift bits in player 1 deck
+8b. If player_to_go = 1 - Shift bits in player 2 deck
+9. Compare carry bit with round_colour flag
+10. If carry bit != round_colour - jump to add_to_loser
+11. Increment pile_count 
+12. Change player_to_go flag
+__. Update player deck count
+__. If deck count = 0 - jump to end_game
+13. Jump to play_card
+##### Add stop condition if a player is out of cards
+
+add_to_loser:
+__. Increment round count
+__. If round_count > 10000 jump to record_infinite_game
+14. Calculate new p1 deck count (use %dl)
+15. Create new pile
+16. Add new pile to losing player
+17. Set player_to_go flag
+18. Jump to round_first_card
+
+record_infinite_game:
+get game_id from stack
+call append_to_file
+
+end_game:
+. 

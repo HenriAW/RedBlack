@@ -13,7 +13,7 @@ bool *next(bool *binArray, int length);
 
 int main() {
   int limit = 1500;
-  int start = 12;
+  int start = 6;
   int split = start;
   int noCards = 2*split;
   

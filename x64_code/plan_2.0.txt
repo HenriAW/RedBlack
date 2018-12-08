@@ -1,0 +1,52 @@
+create_pickup:
+
+# We have:
+#	%rax p1 deck
+#	%rbx p2 deck
+#	%cl number of cards in the pickup
+#	%dl number of cards in p1 deck
+#	%dh number of cards in p2 deck
+#	#ch player to go
+#	#xx round_colour flag
+#
+# We'll use %edi to create the new deck
+# if round_colour flag is 1, we need 111...10
+# if round colour flag is 0, we need 000...01
+# (which is just 1)
+
+ cmp $1, %xx 	#check if round_colour is 1
+ je round_colour_one
+round_colour_zero:	# just for clarity
+ mov $1, %edi	#round colour is 0
+ jmp add_pile_to_loser
+
+round_colour_one:
+ mov $2, %edi	# This will be 000...010
+ shr %cl, %edi	# Shifts the 1 so when we minus
+		# we'll have the correct number of cards
+ sub $2, %edi	# minuses, so we have 000...0111...10
+		# where the right-most 1 is in place %cl
+
+add_pile_to_loser:
+ # Now we've used round colour flag, we can overwrite it
+ # to calculate the number of bits we need to shift our
+ # pile so that it fits neetly on the end of the losers
+ # hand. We should also be able to overwrite %cl!
+ # bits to shift = 64 - (cards in losers hand + cards in pile)
+ cmp $0, %ch	# Check if player 1 lost
+ je player_one_lose
+player_two_lose:	# just for clarity
+ add %dh, %cl		# I'm not sure if this is the right way round
+ sub %cl, $64		# not sure if this is possible
+ 			# I'm hoping this will leave the result in %cl
+ shr %cl, %edi		# Shift bits up
+ add %edi, %rbx		# Hopefully will append pile to p2 deck
+			# NEED TO CHECK THAT NO OFF BY 1 ERRORS HAPPEN
+ jmp end
+
+player_one_lose:
+ add %dl, %cl
+ sub %cl, $64
+ shr %cl, %edi
+ add %edi, %rax
+ jmp end		# Basically same as player_two_loses
