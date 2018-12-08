@@ -1,12 +1,11 @@
 .include "linux.s"
-# Experiment 2
 #%rax - Number
 #%rbx - And result
 #%rcx - And flag
 #%rdx - 1 count. This will keep track of how many 1's we need to add at the end
 
 .section .bss
-.equ MAX_SIG_INT32_SZ, 52
+.equ MAX_SIG_INT32_SZ, 20
 .lcomm INT_TEXT, MAX_SIG_INT32_SZ
 
 .section .text
@@ -70,14 +69,14 @@ output_results:
  pushq $INT_TEXT
  pushq %rax
  call int_to_ascii
- addq $4, %rsp
+ addq $8, %rsp
 
  # Print result
- #movq $SYS_WRITE, %rax
- #movq $STDOUT, %rbx
- #movq $INT_TEXT, %rcx
- #movq $MAX_SIG_INT32_SZ, %rdx
- #int $LINUX_SYSCALL
+ movq $SYS_WRITE, %rax
+ movq $STDOUT, %rbx
+ movq $INT_TEXT, %rcx
+ movq $MAX_SIG_INT32_SZ, %rdx
+ int $LINUX_SYSCALL
 
 exit:
  movq %rax, %rbx

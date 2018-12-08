@@ -17,8 +17,8 @@
 # %rdi will hold the base (10)
 #
 
-.equ ST_VALUE, 8
-.equ ST_BUFFER, 12
+.equ ST_VALUE, 16
+.equ ST_BUFFER, 24
 
 .globl int_to_ascii
 .type int_to_ascii, @function
