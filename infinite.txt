@@ -1,3 +1,5 @@
+This is a complete list of infinite games in balanced decks (same number of red and black cards) from 1 red card, 1 black card, to 20 cards of each. I've also included known infinte games for more cards but these aren't complete.
+
 6:
 001011111000
 010110110100
@@ -111,6 +113,9 @@
 19:
 00110001011111000101101011000101101100
 01101011000101101100011000101111100010
+
+20:
+None exist
 
 21:
 111011101111010110001000111100011100000000
