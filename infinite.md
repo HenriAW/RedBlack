@@ -1,6 +1,6 @@
 # Known infinite sequences with balanced decks
 This is a complete list of known infinite games in balanced decks (same number of red and black cards) from 1 red card, 1 black card, to 21 cards of each. I've also included known infinte games for more cards but these aren't complete.
-
+```
 6:
 000101  111001
 000110  011110
@@ -175,3 +175,4 @@ None exist
 
 23:
 00010001100111111011101  01000110101100010011010
+```
