@@ -17,7 +17,7 @@ newline:
 .section .text
 .global _start
 _start:
- movb $52, %r11b # Number of cards
+ movb $52, %r11b # Number of cards. !CHANGE THIS NUMBER TO CHANGE DECK SIZE!
  movb %r11b, %r13b # Number of cards per person
  shrb $1, %r13b   # Halve %r11b
  movb $65, %r14b # 65 - no cards
@@ -34,7 +34,7 @@ _start:
  decq %r12
 
 get_next_number:
- movb $52, %r11b # Last card checker
+ movb $52, %r11b # Last card checker. !CHANGE THIS NUMBER TO CHANGE DECK SIZE!
  movq $1, %rcx  # Bit checker
  movq $1, %rdx  # The count
  movq $1, %rbx  # Temporary and storage
